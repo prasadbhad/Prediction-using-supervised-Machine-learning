@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+#Reading data from remote link
+url = "http://bit.ly/w-data"
+data = pd.read_csv(url)
+data.head()
+data.isnull().sum()
+data.describe()
+x = data.drop("Scores",axis=1).values
+y = data['Scores'].values
+sns.scatterplot(x = data.Hours,y = data.Scores)
+plt.xlabel('Hours Studied')
+plt.ylabel('Scores')
+plt.title('Relation Between Hours and Scores')
+plt.show()
+from sklearn.linear_model import LinearRegression
+reg = LinearRegression()
+reg.fit(X,Y)
+prediction_space=np.linspace(min(X),max(X)).reshape(-1, 1)
+plt.scatter(X, Y, color='blue')
+plt.scatter(prediction_space, reg.predict(prediction_space),color='black',linewidth=3)
+plt.show()
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, random_state=0)
+lr = LinearRegression().fit(X_train, Y_train)
+print("Training set score: {:.2f}".format(lr.score(X_train, Y_train)))
+print("Test set score:{:.2f}".format(lr.score(X_test, Y_test)))
+print("Coeff: ",lr.coef_)
+print("Intercept: ",lr.intercept_)
+plt.scatter(X_train, Y_train)
+plt.plot(X_train, 1.9322+9.94167834* X_train,'r')
+plt.show()
+Hours = float(input ("Enter Study Hours:"))
+Hours = [[Hours]]
+lr.predict(Hours)
